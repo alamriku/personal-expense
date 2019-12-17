@@ -24,12 +24,10 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 18),
               button: TextStyle(
-                color: Colors.white,
-                 fontFamily: 'OpenSans',
+                  color: Colors.white,
+                  fontFamily: 'OpenSans',
                   fontWeight: FontWeight.bold,
-                  fontSize: 15
-                )
-              ),
+                  fontSize: 15)),
           appBarTheme: AppBarTheme(
               textTheme: ThemeData.light().textTheme.copyWith(
                       title: TextStyle(
@@ -63,7 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime chosenDate) {
     final newTx = Transaction(
         title: txTitle,
         amount: txAmount,
@@ -88,34 +87,41 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void  _deleteTransaction(String id){
-        setState(() {
-          _userTransactions.removeWhere((tx){
-            return tx.id==id;
-          });
-        });
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) {
+        return tx.id == id;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Personal Expenses'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _startAddNewTransaction(context),
+        )
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Personal Expenses'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _startAddNewTransaction(context),
-          )
-        ],
-      ),
+      appBar: appBar,
       body: Container(
         child: SingleChildScrollView(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Chart(_recentTransactions),
-              TransactionList(_userTransactions,_deleteTransaction),
+              Container(
+                height: (MediaQuery.of(context).size.height -appBar.preferredSize.height - MediaQuery.of(context).padding.top) * .4, 
+              child: Chart(_recentTransactions)
+              ),
+              Container(
+                height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top)*.6,
+                child: TransactionList(_userTransactions, _deleteTransaction)
+                ),
             ],
           ),
         ),

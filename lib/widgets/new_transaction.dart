@@ -26,7 +26,7 @@ class _NewTransactionState extends State<NewTransaction> {
     if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate ==null) {
       return;
     }
-    //return will stop the below code in input are empty
+    //return will stop the below code if input are empty
     widget.addTx(
       enteredTitle, 
       enteredAmount,
